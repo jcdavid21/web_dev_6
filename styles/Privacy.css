@@ -1,0 +1,45 @@
+/* Basic styling for the body */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.grid-con{
+    display: grid;
+    grid-template-columns: 260px 1fr 0;
+    align-items: start;
+    justify-content: center;
+    margin-top: 80px;
+}
+
+/* Privacy section styling */
+.privacy-section {
+    border: 2px solid #f6a425; 
+    text-align: center; 
+    padding: 10px; 
+    margin: 20px auto; 
+    width: 80%; 
+    box-sizing: border-box; 
+}
+
+.privacy-section h2 {
+    margin: 0; 
+    color: #f6a425; 
+}
+
+.Policies h4 {
+    color: #f6a425; 
+}
+
+.Policies {
+    text-align: left; 
+    margin: 10px 0 0 0; 
+    padding: 10px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .search-bar input {
+        width: 100%;
+    }
+}

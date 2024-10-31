@@ -1,0 +1,176 @@
+body {
+    background: linear-gradient(to right, #f6a425, #daa559, #f5f4ed); /* Gradient from orange to light orange to white */
+    margin: 0;
+}   
+
+.center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-top: 80px;
+}
+
+.container{
+    max-width: 1200px;
+    width: 100%;
+}
+
+.container .center{
+    gap: 50px;
+}
+.center .container .center .contact{
+    background-color: white;
+    padding: 30px;
+    max-width: 550px;
+    border-radius: 8px;
+    box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.51);
+    -webkit-box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.51);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+.center .container .center .img-con{
+    height: 500px;
+    flex: 1;
+}
+
+.center .container .center .img-con img{
+    object-fit: contain;
+}
+
+.contact .title{
+    color: #f6a425;
+    font-weight: 500;
+    text-align: center;
+    font-size: 22px;
+    border-bottom: 1px solid #f6a425;
+    padding-bottom: 6px;
+}
+
+.contact .text{
+    text-align: center;
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.contact .div{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #fff0ce;
+    padding: 10px 24px;
+    border-radius: 8px;
+}
+
+.contact textarea{
+    background-color: #fff0ce;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid rgb(206, 206, 206);
+}
+
+.contact .div i{
+    color: rgb(94, 94, 94);
+}
+
+.contact .div input{
+    background: transparent;
+    width: 100%;
+    outline: none;
+    border: none;
+    padding: 6px 12px;
+}
+
+.contact .submit button{
+    background-color: #f6a425;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.stars i {
+    color: #ccc; /* Default star color */
+    cursor: pointer;
+}
+
+.stars i.filled {
+    color: #f6a425; /* Color for selected stars */
+}
+
+.reviews{
+    margin-bottom: 30px;
+}
+
+.reviews .review-con{
+    background: white;
+    padding: 30px;
+    max-width: 550px;
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.51);
+    -webkit-box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.51);
+    -moz-box-shadow: -1px 2px 5px 0px rgba(0,0,0,0.51);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    flex: 1;
+}
+
+
+.reviews .title{
+    color: white;
+    font-weight: 500;
+    text-align: center;
+    font-size: 28px;
+    border-bottom: 1px solid white;
+    padding-bottom: 6px;
+    margin-bottom: 20px;
+}
+
+.review-con .details{
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.review-con .user-flex{
+    display: flex;
+    align-items: start;
+    gap: 10px;
+}
+
+.user-details .name{
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.details .date{
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.user-details .rate i{
+    font-size: 14px;
+    color: #f6a425;
+}
+
+.review-con .message{
+    font-size: 14px;
+    font-weight: 300;
+}
+
+.review-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}

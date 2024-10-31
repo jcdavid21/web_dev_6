@@ -1,0 +1,57 @@
+.spaces-con {
+    position: relative;
+    height: 100vh;
+    left: 0;
+    background-color: white;
+    border-right: 1px solid rgba(54, 54, 54. 0.5);
+    padding: 30px 20px;
+    overflow: auto;
+}
+
+.spaces-con .closebtn{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    color: #f6a425;
+    cursor: pointer;
+}
+
+
+.spaces-con .joined-spaces .title{
+    font-size: 15px;
+    font-weight: 500;
+    color: #f6a425;
+}
+
+.spaces-con .joined-spaces .joined-details{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.spaces-con .joined-spaces .name{
+    font-size: 14px;
+    white-space: nowrap;      /* Prevents the text from wrapping onto a new line */
+  overflow: hidden;         /* Hides any overflowing content */
+  text-overflow: ellipsis;  /* Adds "..." at the end of the overflowed text */
+  width: 200px;             /* Set a fixed width as per your layout */
+}
+
+.spaces-con .joined-spaces .joined-details .img-con{
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.spaces-con .joined-spaces .joined-details .img-con img{
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+}
+
+.recommended-spaces{
+    margin-top: 30px;
+}

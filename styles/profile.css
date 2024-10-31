@@ -1,0 +1,83 @@
+.profile-con {
+    position: relative;
+    height: 100vh;
+    right: 0;
+    background-color: white;
+    border-left: 1px solid rgba(54, 54, 54. 0.5);
+    padding: 30px 20px;
+    overflow: hidden;
+}
+
+.profile-con .profile-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    border-bottom: 1px solid rgb(199, 199, 199);
+}
+
+.profile-con .profile-center .img-con
+{
+    height: 120px;
+    width: 120px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.profile-con .profile-center .img-con img{
+    object-fit: contain;
+    height: 100%;
+    width: 100%;
+}
+
+.profile-con .title{
+    font-size: 18px;
+    font-weight: 500;
+    color: #f6a425;
+    margin-top: 20px;
+}
+
+.profile-con .details, .profile-con ul{
+    font-size: 14px;
+    line-height: 25px;
+    font-weight: 300;
+}
+
+.profile-con .details span, .profile-con ul li{
+    font-weight: 500;
+}
+
+.profile-con .soc-media .icons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.profile-con .soc-media .icons i{
+    color: #eca234;
+    font-size: 24px;
+}
+
+.out-div{
+    margin-top: 30px;
+    display: flex;
+    justify-content: end;
+}
+
+.out-div button{
+    padding: 6px 24px;
+    background-color: white;
+    color: #f6a425;
+    border: 1px solid #f6a425;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.out-div button:hover{
+    background-color: #f6a425;
+    color: white;
+}
