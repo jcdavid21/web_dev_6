@@ -8,9 +8,6 @@ body {
     cursor: pointer;
 }
 
-.space{
-    margin-top: 77px;
-}
 
 #grid-con{
     display: grid;

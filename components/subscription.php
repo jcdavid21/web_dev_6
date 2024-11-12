@@ -15,7 +15,7 @@
 <body>
 <?php include 'header.php'; ?>
     <div id="grid-con">
-        <div class="space">
+        <div class="space" style="margin-top: 77px;">
             <?php include 'spaces.php'; ?>
         </div>
         <div class="center" id="main-con">

@@ -9,8 +9,10 @@
     <link rel="stylesheet" href="../styles/signup.css">
     <link rel="stylesheet" href="../styles/general.css">
     <link rel="stylesheet" href="../styles/spaces.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
@@ -23,11 +25,11 @@
             <span class="title">Login</span>
             <form action="#">
                 <div class="input-field">
-                <input type="text" placeholder="Enter your email" required />
+                <input type="text" id="log_email" placeholder="Enter your email" required />
                 <i class="uil uil-envelope icon"></i>
                 </div>
                 <div class="input-field">
-                <input type="password" class="password" placeholder="Enter your password" required />
+                <input type="password" id="log_password" class="password" placeholder="Enter your password" required />
                 <i class="uil uil-lock icon"></i>
                 <i class="uil uil-eye-slash showHidePw"></i>
                 </div>
@@ -39,7 +41,7 @@
                 <a href="./forgotpass.php" class="text">Forgot password?</a>
                 </div>
                 <div class="input-field button">
-                <input type="button" value="Login" />
+                <input type="button" id="submit" value="Login" />
                 </div>
             </form>
             <div class="login-signup">
@@ -54,11 +56,11 @@
             <span class="title">Sign up</span>
             <form action="#">
                 <div class="input-field">
-                <input type="text" placeholder="Enter your name" required />
+                <input type="text" id="name" placeholder="Enter your name" required />
                 <i class="uil uil-user"></i>
                 </div>
                 <div class="input-field">
-                <input type="text" placeholder="Enter your gender" required />
+                <input type="text" id="gender" placeholder="Enter your gender" required />
                 <i class="fa-solid fa-venus-mars"></i>
                 </div>
                 <div class="input-field" >
@@ -66,15 +68,15 @@
                     <i class="fa-solid fa-calendar-days"></i>
                 </div>
                 <div class="input-field">
-                <input type="text" placeholder="Enter your email" required />
+                <input type="text" id="email" placeholder="Enter your email" required />
                 <i class="uil uil-envelope icon"></i>
                 </div>
                 <div class="input-field">
-                <input type="text" placeholder="Enter your username" required />
+                <input type="text" id="username" placeholder="Enter your username" required />
                 <i class="fa-regular fa-circle-user"></i>
                 </div>
                 <div class="input-field">
-                <input type="password" class="password" placeholder="Password" required />
+                <input type="password" id="password" class="password" placeholder="Password" required />
                 <i class="uil uil-lock icon"></i>
                 <i class="uil uil-eye-slash showHidePw"></i>
                 </div>
@@ -85,7 +87,7 @@
                 </div>
                 </div>
                 <div class="input-field button">
-                <input type="button" value="Signup" />
+                <input type="button" id="signup" value="Signup" />
                 </div>
             </form>
             <div class="login-signup">
@@ -102,5 +104,7 @@
 <?php include 'footer.php'; ?>
 <script src="../js/sidebar.js"></script>
 <script src="../js/signup.js"></script>
+<script src="../jquery/signup.js"></script>
+<script src="../jquery/login.js"></script>
 </body>
 </html>

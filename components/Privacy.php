@@ -13,8 +13,12 @@
 <body>
     <?php include 'header.php'; ?>
     <!-- Privacy Section with Border -->
-    <div class="grid-con">
-    <?php include 'spaces.php'; ?>
+    <div class="grid-con" style="<?php echo empty($_SESSION['user_id']) ? 'grid-template-columns: 50px 1fr 0' : ''; ?>">
+        <?php if (!empty($_SESSION['user_id'])): ?>
+            <?php include 'spaces.php'; ?>
+        <?php else: ?>
+            <div class="space"></div>
+        <?php endif; ?>
         <div class="privacy-section" id="privacy-section">
             <h2 id="privacy-header">Privacy Policy</h2>
             <p id="intro-paragraph">At Deep Dive, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website. Please read this policy carefully to understand our views and practices regarding your personal data.</p>

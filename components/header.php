@@ -1,11 +1,27 @@
+<?php 
+    session_start();
+    $user_id = "";
+    if(isset($_SESSION["user_id"])){
+        $user_id = $_SESSION["user_id"];
+    }
+?> 
+
+<?php 
+    require_once("../backend/config/config.php");
+?>
+
 <nav>
 <div class="navbar">
         <div class="lc">
-            <div class="spaces-container" onclick="openNav()">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-            </div>
+            <?php 
+                if(!empty($user_id)){
+            ?>
+                <div class="spaces-container" onclick="openNav()">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
+            <?php } ?>
 
             <div class="logo">
                 <img src="../imgs/DDlogo.jpg" alt="Logo">
@@ -20,48 +36,40 @@
             <a href="./homepage.php" class="nav-icon"><i class="fas fa-home"></i><span>Home</span></a>
 
             <a href="#" class="nav-icon spaces"><i class="fas fa-rocket"></i><span>Spaces</span>
+                <?php if(!empty($user_id)){ ?>
+
                 <div class="hover-div">
-                    <div class="space">
-                        <div class="img-con">
-                            <img src="../imgs/reddit-logo-2436.png" alt="">
-                        </div>
-                        Technology
-                    </div>
+                    <?php 
+                        $query = "SELECT * FROM tbl_spaces WHERE acc_id = ? ORDER BY space_name ASC";
+                        $stmt = $conn->prepare($query);
+                        $stmt->bind_param('i', $user_id);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
 
+                        if($result->num_rows > 0){
+                            while($row = $result->fetch_assoc()){
+                    ?>
                     <div class="space">
                         <div class="img-con">
-                            <img src="../imgs/reddit-logo-2436.png" alt="">
+                            <img src="<?php echo $row["space_img"] ?>" alt="">
                         </div>
-                        Technology
+                        <?php echo $row["space_name"] ?>
                     </div>
-
-                    <div class="space">
-                        <div class="img-con">
-                            <img src="../imgs/reddit-logo-2436.png" alt="">
-                        </div>
-                        Technology
-                    </div>
-
-                    <div class="space">
-                        <div class="img-con">
-                            <img src="../imgs/reddit-logo-2436.png" alt="">
-                        </div>
-                        Technology
-                    </div>
-
-                    <div class="space">
-                        <div class="img-con">
-                            <img src="../imgs/reddit-logo-2436.png" alt="">
-                        </div>
-                        Technology
-                    </div>
+                    <?php 
+                            }
+                        }
+                    ?>
 
                     <div class="add-more">
                         +
                     </div>
                 </div>
+                <?php } ?>
             </a>
-
+            
+            <?php 
+                if(!empty($user_id)){
+            ?>
             <a href="#" class="nav-icon following"><i class="fas fa-user-friends"></i><span>Following</span>
                 <div class="hover-div">
                     <div class="icons-outer">
@@ -105,6 +113,10 @@
                     </div>
                 </div>
             </a>
+            <?php } ?>
+            <?php 
+                if(!empty($user_id)){
+            ?>
             <a href="#" class="nav-icon following"><i class="fas fa-bell"></i><span>Notifications</span>
                 <div class="hover-div">
                     <div class="followed-div">
@@ -132,12 +144,26 @@
                     </div>
                 </div>
             </a>
+            <?php } ?>
+            <?php 
+                if(empty($user_id)){
+            ?>
             <a href="signup.php" class="nav-icon sign-in"><i class="fas fa-sign-in-alt"></i><span>Sign In</span></a>
+            <?php } ?>
+            <?php 
+                if(!empty($user_id)){
+            ?>
             <a href="./subscription.php" class="nav-icon subscription"><i class="fas fa-star"></i><span>Subscription</span></a>
+            <?php } ?>
+            <a href="./createblog.php" class="nav-icon"><i class="fa-brands fa-blogger"></i><span>Create Blog</span></a>
         </div>
-
-        <div class="account">
-            <a href="#" class="nav-icon"><i class="fa-solid fa-user"></i><span>Account</span></a>
-        </div>
+        
+        <?php
+            if(!empty($user_id)){
+         ?>
+            <div class="account">
+                <a href="./account.php" class="nav-icon"><i class="fa-solid fa-user"></i><span>Account</span></a>
+            </div>
+        <?php } ?>
     </div>
 </nav>

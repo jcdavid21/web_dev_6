@@ -11,7 +11,6 @@ require_once("../backend/config/config.php");
     <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="../styles/general.css">
     <link rel="stylesheet" href="../styles/Homepage.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -20,7 +19,7 @@ require_once("../backend/config/config.php");
 <body>
     <?php include 'header.php'; ?>
     <main>
-        <div class="center mt-16">
+        <div class="center">
             <?php if(!empty($user_id)){
             include 'spaces.php';
             }else{
@@ -30,13 +29,13 @@ require_once("../backend/config/config.php");
                 <div class="container">
                 <h1>Home Page</h1>
                     <?php 
-                        $query = "SELECT tp.*, td.full_name, td.profile_img, tr.role_name, ts.space_id, ts.space_name, COUNT(tc.posted_id) AS total_comments FROM tbl_spaces_post tp
+                        $query = "SELECT tp.*, td.full_name, tr.role_name, ts.space_id, ts.space_name, COUNT(tc.posted_id) AS total_comments FROM tbl_spaces_post tp
                         JOIN tbl_account ta ON tp.acc_id = ta.acc_id
                         JOIN tbl_account_details td ON tp.acc_id = td.acc_id
                         JOIN tbl_role tr ON ta.role_id = tr.role_id
                         JOIN tbl_spaces ts ON tp.space_id = ts.space_id
                         LEFT JOIN tbl_comments tc ON tp.posted_id = tc.posted_id
-                        WHERE tp.posted_privacy = 1 AND tp.post_status = 1
+                        WHERE tp.posted_privacy = 1
                         GROUP BY tp.posted_id
                         ORDER BY tp.posted_date ASC";
                         $stmt = $conn->prepare($query);
@@ -49,18 +48,10 @@ require_once("../backend/config/config.php");
                     <div class="content">
                         <div class="post-details">
                             <div class="left">
-                                <?php if (empty($row["profile_img"])): ?>
-                                    <i class="fa-regular fa-circle-user"></i>
-                                <?php else: ?>
-                                    <div class="h-16">
-                                        <img src="<?php echo htmlspecialchars($row["profile_img"]); ?>" alt="Profile Image"
-                                        class="h-full rounded-full">
-                                    </div>
-                                <?php endif; ?>
-
+                                <i class="fa-regular fa-circle-user"></i>
                                 <div class="user-details">
                                     <div class="name"><?php echo $row["full_name"] ?> - <span>Author</span></div>
-                                    <div class="font-medium text-sm text-amber-500"><?php echo $row["role_name"] ?></div>
+                                    <div class="date">#<?php echo $row["role_name"] ?></div>
                                     <div class="date"><?php echo $dateFormated ?></div>
                                 </div>
                             </div>
@@ -70,9 +61,7 @@ require_once("../backend/config/config.php");
                         </div>
 
                         <div class="post-description">
-                            <div class="font-medium text-lg"><?php echo $row["post_title"] ?></div>
                             <?php echo $row["posted_caption"] ?>
-                            <div class="font-medium text-blue-400"><?php echo $row["post_tags"] ?></div>
                         </div>
 
                         <div class="img-con">

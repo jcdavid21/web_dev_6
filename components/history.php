@@ -53,8 +53,14 @@
 <?php include 'header.php'; ?>
 
 
-<div class="grid-con">
-    <?php include 'spaces.php'; ?>
+<div class="grid-con"
+style="<?php echo empty($_SESSION['user_id']) ? 'grid-template-columns: 50px 1fr 0' : ''; ?>">
+    <?php if (!empty($_SESSION['user_id'])): ?>
+        <?php include 'spaces.php'; ?>
+    <?php else: ?>
+        <div class="space"></div>
+    <?php endif; ?>
+
     <div class="history-container">
         <h1>History</h1>
         <p>

@@ -28,7 +28,7 @@ require_once("../backend/config/config.php");
             } ?>
             <div style="display: flex; align-items: center; justify-content: center;">
                 <div class="container">
-                <h1>Home Page</h1>
+                <h1>Drafts</h1>
                     <?php 
                         $query = "SELECT tp.*, td.full_name, td.profile_img, tr.role_name, ts.space_id, ts.space_name, COUNT(tc.posted_id) AS total_comments FROM tbl_spaces_post tp
                         JOIN tbl_account ta ON tp.acc_id = ta.acc_id
@@ -36,16 +36,19 @@ require_once("../backend/config/config.php");
                         JOIN tbl_role tr ON ta.role_id = tr.role_id
                         JOIN tbl_spaces ts ON tp.space_id = ts.space_id
                         LEFT JOIN tbl_comments tc ON tp.posted_id = tc.posted_id
-                        WHERE tp.posted_privacy = 1 AND tp.post_status = 1
+                        WHERE tp.post_status = 2 AND tp.acc_id = ?
                         GROUP BY tp.posted_id
                         ORDER BY tp.posted_date ASC";
                         $stmt = $conn->prepare($query);
+                        $stmt->bind_param('i', $user_id);
                         $stmt->execute();
                         $result = $stmt->get_result();
                         
+                        if($result->num_rows > 0){
                         while($row = $result->fetch_assoc()){
                             $dateFormated = date('M d, Y', strtotime($row["posted_date"]));
                     ?>
+                    
                     <div class="content">
                         <div class="post-details">
                             <div class="left">
@@ -57,7 +60,6 @@ require_once("../backend/config/config.php");
                                         class="h-full rounded-full">
                                     </div>
                                 <?php endif; ?>
-
                                 <div class="user-details">
                                     <div class="name"><?php echo $row["full_name"] ?> - <span>Author</span></div>
                                     <div class="font-medium text-sm text-amber-500"><?php echo $row["role_name"] ?></div>
@@ -79,23 +81,33 @@ require_once("../backend/config/config.php");
                             <img src="<?php echo $row["posted_img"] ?>" alt="">
                         </div>
 
-                        <div class="others-con">
-                            <div class="likes">
-                                <i class="fa-solid fa-up-long"></i>
-                                <div>Update <span style="color: red; font-weight:500;"><?php echo $row["posted_likes"] ?></span></div>
-                                <i class="fa-solid fa-down-long"></i>
+                        <div class="flex items-center justify-between">
+                            <div class="others-con">
+                                <div class="likes">
+                                    <i class="fa-solid fa-up-long"></i>
+                                    <div>Update <span style="color: red; font-weight:500;"><?php echo $row["posted_likes"] ?></span></div>
+                                    <i class="fa-solid fa-down-long"></i>
+                                </div>
+                                <div class="comments">
+                                    <i class="fa-regular fa-comment"></i>
+                                    <span><?php echo $row["total_comments"] ?></span>
+                                </div>
+                                <div class="comments">
+                                    <i class="fa-solid fa-rotate"></i>
+                                    <span><?php echo $row["posted_share"] ?></span>
+                                </div>
                             </div>
-                            <div class="comments">
-                                <i class="fa-regular fa-comment"></i>
-                                <span><?php echo $row["total_comments"] ?></span>
-                            </div>
-                            <div class="comments">
-                                <i class="fa-solid fa-rotate"></i>
-                                <span><?php echo $row["posted_share"] ?></span>
+
+                            <div style="background-color: #f6a425;"
+                            class="pt-2 pb-2 pr-10 pl-10 text-white rounded-full text-sm
+                            cursor-pointer">
+                                Publish
                             </div>
                         </div>
                     </div>
-                    <?php } ?>
+                    <?php }}else{
+                        echo '<div class="content">No Drafts Found</div>';
+                    } ?>
 
                 </div>
             </div>

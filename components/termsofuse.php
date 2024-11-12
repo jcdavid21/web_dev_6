@@ -58,8 +58,12 @@
 <body>
 <?php include 'header.php'; ?>
 
-<div class="center">
-<?php include 'spaces.php'; ?>
+<div class="center" style="<?php echo empty($_SESSION["user_id"]) ? 'grid-template-columns: 50px 1fr 0' : '' ?>">
+    <?php if (!empty($_SESSION["user_id"])): ?>
+        <?php include 'spaces.php'; ?>
+    <?php else: ?>
+        <div class="space"></div>
+    <?php endif; ?>
     <div class="terms-container">
         <h1 style="text-align: center; color: #f6a425;">Terms of Use</h1>
         <p>

@@ -9,64 +9,62 @@
     <div class="spaces-con">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
     <div class="cont">
+
         <div class="joined-spaces">
             <div class="title">Joined Spaces</div>
-            <div class="joined-details">
-                <div class="img-con">
-                    <img src="../imgs/reddit-logo-2436.png" alt="">
-                </div>
-                <div class="name">Technology</div>
-            </div>
-            <div class="joined-details">
-                <div class="img-con">
-                    <img src="../imgs/reddit-logo-2436.png" alt="">
-                </div>
-                <div class="name">Gaming</div>
-            </div>
+            <?php 
+                $query2 = "SELECT ts.*, tj.* 
+                        FROM tbl_spaces ts
+                        JOIN tbl_spaces_joined tj ON tj.space_id = ts.space_id
+                        WHERE tj.acc_id = ?
+                        GROUP BY ts.space_id, tj.acc_id
+                        ORDER BY ts.space_name ASC";
+                $stmt2 = $conn->prepare($query2);
+                $stmt2->bind_param('i', $user_id);
+                $stmt2->execute();
+                $result2 = $stmt2->get_result();
 
+                if($result2->num_rows > 0){
+                    while($row2 = $result2->fetch_assoc()){
+            ?>
             <div class="joined-details">
                 <div class="img-con">
-                    <img src="../imgs/reddit-logo-2436.png" alt="">
+                    <img src="<?php echo $row2["space_img"] ?>" alt="">
                 </div>
-                <div class="name">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur nulla provident doloribus illum. Assumenda, enim eos repellat nam praesentium officiis perspiciatis obcaecati dignissimos, fuga deleniti consequuntur sed ratione, impedit natus.</div>
+                <div class="name"><?php echo $row2["space_name"] ?></div>
             </div>
-
-            <div class="joined-details">
-                <div class="img-con">
-                    <img src="../imgs/reddit-logo-2436.png" alt="">
-                </div>
-                <div class="name">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt doloremque quae, iure voluptatibus ad odit dolores dignissimos sed amet ex error, quibusdam fugit neque obcaecati accusamus fuga soluta fugiat ea</div>
-            </div>
+            <?php 
+                    }
+                }
+            ?>
         </div>
 
         <div class="joined-spaces recommended-spaces">
             <div class="title">Recommended Spaces</div>
-            <div class="joined-details">
-                <div class="img-con">
-                    <img src="../imgs/reddit-logo-2436.png" alt="">
-                </div>
-                <div class="name">Technology</div>
-            </div>
-            <div class="joined-details">
-                <div class="img-con">
-                    <img src="../imgs/reddit-logo-2436.png" alt="">
-                </div>
-                <div class="name">Gaming</div>
-            </div>
+                <?php 
+                    $query3 = "SELECT * FROM tbl_spaces WHERE acc_id != ? ORDER BY RAND() LIMIT 5";
+                    $stmt3 = $conn->prepare($query3);
+                    $stmt3->bind_param('i', $user_id);
+                    $stmt3->execute();
+                    $result3 = $stmt3->get_result();
 
-            <div class="joined-details">
-                <div class="img-con">
-                    <img src="../imgs/reddit-logo-2436.png" alt="">
-                </div>
-                <div class="name">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur nulla provident doloribus illum. Assumenda, enim eos repellat nam praesentium officiis perspiciatis obcaecati dignissimos, fuga deleniti consequuntur sed ratione, impedit natus.</div>
-            </div>
+                    if($result3->num_rows > 0){
+                        while($row3 = $result3->fetch_assoc()){
+                ?>
+                        <div class="joined-details">
+                            <div class="img-con">
+                                <img src="<?php echo $row3["space_img"] ?>" alt="">
+                            </div>
+                            <div class="name"><?php echo $row3["space_name"] ?></div>
+                        </div>
+                <?php
+                        }
+                    } else {
+                        echo "No recommended spaces available.";
+                    }
+                ?>
 
-            <div class="joined-details">
-                <div class="img-con">
-                    <img src="../imgs/reddit-logo-2436.png" alt="">
-                </div>
-                <div class="name">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deserunt doloremque quae, iure voluptatibus ad odit dolores dignissimos sed amet ex error, quibusdam fugit neque obcaecati accusamus fuga soluta fugiat ea</div>
-            </div>
+
 
 
         </div>
