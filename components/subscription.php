@@ -74,14 +74,14 @@
                     </div>
                     <div class="select">
                         <div class="flex">
-                            <input type="radio" name="subs" checked>
+                            <input type="radio" name="subs" id="monthly" checked>
                             <div>
                                 <span>Monthly</span>
                                 <div class="price">₱300</div>
                             </div>
                         </div>
                         <div class="flex">
-                            <input type="radio" name="subs">
+                            <input type="radio" name="subs" id="yearly">
                             <div>
                                 <span>Yearly</span>
                                 <div class="price">₱2,500</div>
@@ -91,12 +91,12 @@
 
                     <div class="due-date">
                         <div class="flex">
-                            <div>Due (DD/MM/YY)</div>
-                            <div class="price">₱300</div>
+                            <div id="due-text"><strong>Due (DD/MM/YY)</strong></div>
+                            <div class="price" id="due-price">₱300</div>
                         </div>
                         <div class="flex">
                             <div><strong>Due today (DD/MM/YY)</strong></div>
-                            <div class="price">₱300</div>
+                            <div class="price" id="due-today">₱300</div>
                         </div>
                     </div>
                     <div class="button-con">
@@ -104,6 +104,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="center">
                 <div class="container dets">
                     <div class="back"><i class="fa-solid fa-chevron-left"></i></div>
@@ -233,5 +234,36 @@
 
 
     </script>
+
+<script>
+    // Function to update the due date based on selected subscription
+    function updateDueDate() {
+        const monthlyRadio = document.getElementById('monthly');
+        const yearlyRadio = document.getElementById('yearly');
+        const dueText = document.getElementById('due-text');
+        const duePrice = document.getElementById('due-price');
+        const dueToday = document.getElementById('due-today');
+
+        if (monthlyRadio.checked) {
+            // If Monthly is selected
+            dueText.innerHTML = "<strong>Due (DD/MM/YY)</strong>";
+            duePrice.innerText = "₱300";
+            dueToday.innerText = "₱300";
+        } else if (yearlyRadio.checked) {
+            // If Yearly is selected
+            dueText.innerHTML = "<strong>Due (DD/MM/YY)</strong>";
+            duePrice.innerText = "₱2,500";
+            dueToday.innerText = "₱2,500";
+        }
+    }
+
+    // Add event listeners to update the due date when a user changes the subscription option
+    document.querySelectorAll('input[name="subs"]').forEach(radio => {
+        radio.addEventListener('change', updateDueDate);
+    });
+
+    // Initialize the due date on page load
+    updateDueDate();
+</script>
 </body>
 </html>

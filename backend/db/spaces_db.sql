@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 12, 2024 at 08:21 AM
+-- Generation Time: Dec 06, 2024 at 03:14 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -79,10 +79,20 @@ INSERT INTO `tbl_account_details` (`acc_id`, `full_name`, `birthdate`, `gender`,
 --
 
 CREATE TABLE `tbl_comments` (
+  `comment_id` int(11) NOT NULL,
   `posted_id` int(11) NOT NULL,
   `comment` varchar(255) NOT NULL,
+  `comment_date` date DEFAULT current_timestamp(),
   `acc_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_comments`
+--
+
+INSERT INTO `tbl_comments` (`comment_id`, `posted_id`, `comment`, `comment_date`, `acc_id`) VALUES
+(1, 1, 'angas', '2024-12-06', 3),
+(23, 3, 'g gagi', '2024-12-06', 3);
 
 -- --------------------------------------------------------
 
@@ -102,6 +112,24 @@ CREATE TABLE `tbl_credentials` (
 INSERT INTO `tbl_credentials` (`acc_id`, `credential_title`) VALUES
 (2, 'JPCS President'),
 (3, 'Back-end Developer');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_likes`
+--
+
+CREATE TABLE `tbl_likes` (
+  `posted_id` int(11) NOT NULL,
+  `acc_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_likes`
+--
+
+INSERT INTO `tbl_likes` (`posted_id`, `acc_id`) VALUES
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -248,12 +276,27 @@ CREATE TABLE `tbl_spaces_post` (
 
 INSERT INTO `tbl_spaces_post` (`posted_id`, `post_title`, `posted_date`, `posted_caption`, `posted_likes`, `posted_share`, `posted_img`, `posted_privacy`, `post_status`, `post_tags`, `space_id`, `acc_id`) VALUES
 (1, 'Technology', '2024-10-10', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 1, 0, '../imgs/post images/post-1.avif', 1, 1, '#Tech', 1, 2),
-(2, 'Programming', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 2, 0, '../imgs/post images/post-2.avif', 1, 1, '#Fyp', 1, 2),
-(3, 'Play', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 1, 2, '../imgs/post images/post-3.avif', 1, 1, '#Jc#Gaming', 3, 3),
-(4, 'Health', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 3, 1, '../imgs/post images/post-4.avif', 1, 2, '#technology', 2, 3),
+(2, 'Programming', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 0, 0, '../imgs/post images/post-2.avif', 1, 1, '#Fyp', 1, 2),
+(3, 'Play', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 0, 0, '../imgs/post images/post-3.avif', 1, 1, '#Jc#Gaming', 3, 3),
+(4, 'Health', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 0, 0, '../imgs/post images/post-4.avif', 1, 2, '#technology', 2, 3),
 (8, 'Food', '2024-11-11', 'asdsadas', 0, 0, '../../imgs/post images/Screenshot 2024-11-10 at 7.56.14 PM.png', 1, 2, '#Food,#Health', 3, 2),
 (9, 'Technology', '2024-11-11', 'hahahddbjjxvhifjffnnvd', 0, 0, '../../imgs/post images/reddit-logo-2436.png', 1, 1, '#tech', 1, 3),
 (10, 'Gaming', '2024-11-11', 'ahddhdhdahkdah', 0, 0, '../../imgs/post images/reddit-logo-2436.png', 1, 2, '#fun', 2, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_subscription`
+--
+
+CREATE TABLE `tbl_subscription` (
+  `subs_id` int(11) NOT NULL,
+  `subs_type` int(11) NOT NULL,
+  `subs_start_month` date NOT NULL,
+  `subs_end_month` date NOT NULL,
+  `subs_receipt_img` varchar(255) NOT NULL,
+  `acc_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexes for dumped tables
@@ -264,6 +307,12 @@ INSERT INTO `tbl_spaces_post` (`posted_id`, `post_title`, `posted_date`, `posted
 --
 ALTER TABLE `tbl_account`
   ADD PRIMARY KEY (`acc_id`);
+
+--
+-- Indexes for table `tbl_comments`
+--
+ALTER TABLE `tbl_comments`
+  ADD PRIMARY KEY (`comment_id`);
 
 --
 -- Indexes for table `tbl_post_status`
@@ -296,6 +345,12 @@ ALTER TABLE `tbl_spaces_post`
   ADD PRIMARY KEY (`posted_id`);
 
 --
+-- Indexes for table `tbl_subscription`
+--
+ALTER TABLE `tbl_subscription`
+  ADD PRIMARY KEY (`subs_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -304,6 +359,12 @@ ALTER TABLE `tbl_spaces_post`
 --
 ALTER TABLE `tbl_account`
   MODIFY `acc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `tbl_comments`
+--
+ALTER TABLE `tbl_comments`
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `tbl_post_status`
@@ -334,6 +395,12 @@ ALTER TABLE `tbl_spaces`
 --
 ALTER TABLE `tbl_spaces_post`
   MODIFY `posted_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `tbl_subscription`
+--
+ALTER TABLE `tbl_subscription`
+  MODIFY `subs_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
