@@ -6,7 +6,7 @@ if(isset($_POST["email"]) && isset($_POST["password"]))
     $email = $_POST["email"];
     $password = $_POST["password"];
 
-    $query1 = "SELECT ta.acc_id, ta.acc_email, ta.acc_username, ta.acc_password, ta.role_id, td.full_name, td.birthdate, td.gender FROM tbl_account ta 
+    $query1 = "SELECT ta.acc_id, ta.acc_email, ta.acc_username, ta.acc_password, ta.role_id, td.full_name, td.birthdate, td.gender, td.profile_img, td.job FROM tbl_account ta 
     INNER JOIN tbl_account_details td ON ta.acc_id = td.acc_id
      WHERE ta.acc_email = ?";
     $stmt1 = $conn->prepare($query1);

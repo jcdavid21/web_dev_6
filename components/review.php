@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../styles/spaces.css">
     <link rel="stylesheet" href="../styles/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Review</title>
 </head>
 <body>
@@ -31,7 +33,7 @@
                     <textarea name="message" id="message" rows="10"
                     cols="10">Feedback message here</textarea>
                     <div class="submit">
-                        <button>Submit</button>
+                        <button id="submitReview">Submit</button>
                     </div>
                 </div>
                 <div class="img-con">
@@ -43,125 +45,51 @@
             <div class="reviews">
                 <div class="title">Reviews</div>
                 <div class="review-grid">
-                    <div class="review-con">
-                        <div class="details">
-                            <div class="user-flex">
-                                <div class="user-con">
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-                                <div class="user-details">
-                                    <div class="name">Juan Dela Cruz</div>
-                                    <div class="rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="date">November 1, 2024</div>
-                        </div>
-                        <div class="message">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptates. Quisquam, voluptates.
-                        </div>
-                    </div>
+                    <?php 
+                        $query = "SELECT tr.*, td.full_name, td.profile_img FROM tbl_reviews tr INNER JOIN tbl_account_details td ON tr.acc_id = td.acc_id";
+                        $stmt = $conn->prepare($query);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+
+                        if($result->num_rows > 0){
+                            while($row = $result->fetch_assoc()){
+                    ?>
 
                     <div class="review-con">
                         <div class="details">
                             <div class="user-flex">
                                 <div class="user-con">
-                                    <i class="fa-solid fa-user"></i>
+                                    <img src="../../<?php echo 
+                                    str_replace("../", "", $row["profile_img"]) ?>" alt="">
                                 </div>
                                 <div class="user-details">
-                                    <div class="name">Juan Dela Cruz</div>
+                                    <div class="name">
+                                        <?php echo $row['full_name'] ?>
+                                    </div>
                                     <div class="rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
+                                        <?php 
+                                            for($i = 0; $i < $row['review_star']; $i++){
+                                                echo '<i class="fa-solid fa-star filled"></i>';
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="date">November 1, 2024</div>
-                        </div>
-                        <div class="message">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptates. Quisquam, voluptates.
-                        </div>
-                    </div>
-
-                    <div class="review-con">
-                        <div class="details">
-                            <div class="user-flex">
-                                <div class="user-con">
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-                                <div class="user-details">
-                                    <div class="name">Juan Dela Cruz</div>
-                                    <div class="rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
+                            <div class="date">
+                                <?php echo date('F d, Y', strtotime($row['review_date'])) ?>
                             </div>
-                            <div class="date">November 1, 2024</div>
                         </div>
                         <div class="message">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptates. Quisquam, voluptates.
+                            <?php echo $row['review_message'] ?>
                         </div>
                     </div>
-
-                    <div class="review-con">
-                        <div class="details">
-                            <div class="user-flex">
-                                <div class="user-con">
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-                                <div class="user-details">
-                                    <div class="name">Juan Dela Cruz</div>
-                                    <div class="rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="date">November 1, 2024</div>
-                        </div>
-                        <div class="message">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptates. Quisquam, voluptates.
-                        </div>
-                    </div>
-
-                    <div class="review-con">
-                        <div class="details">
-                            <div class="user-flex">
-                                <div class="user-con">
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-                                <div class="user-details">
-                                    <div class="name">Juan Dela Cruz</div>
-                                    <div class="rate">
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                        <i class="fa-solid fa-star"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="date">November 1, 2024</div>
-                        </div>
-                        <div class="message">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptates. Quisquam, voluptates.
-                        </div>
-                    </div>
+                    <?php 
+                            }
+                        }else{
+                            echo "<div class='no-reviews'>No reviews available.</div>";
+                        }
+                    ?>
+                    
                 </div>
             </div>
         </div>
@@ -169,10 +97,11 @@
 
     <?php include 'footer.php'; ?>
     <script>
+        let stars_number = 0;
         function setRating(rating) {
             // Select all stars
             const stars = document.querySelectorAll('.stars i');
-            
+            stars_number = rating;
             // Loop through each star to update its state
             stars.forEach((star, index) => {
                 if (index < rating) {
@@ -185,5 +114,6 @@
     </script>
 
     <script src="../js/sidebar.js"></script>
+    <script src="../jquery/reviews.js"></script>
 </body>
 </html>

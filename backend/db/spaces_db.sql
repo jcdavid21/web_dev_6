@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2024 at 03:14 PM
+-- Generation Time: Dec 10, 2024 at 03:03 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -91,8 +91,9 @@ CREATE TABLE `tbl_comments` (
 --
 
 INSERT INTO `tbl_comments` (`comment_id`, `posted_id`, `comment`, `comment_date`, `acc_id`) VALUES
-(1, 1, 'angas', '2024-12-06', 3),
-(23, 3, 'g gagi', '2024-12-06', 3);
+(23, 3, 'g gagi', '2024-12-06', 3),
+(24, 1, 'sadasd', '2024-12-07', 3),
+(25, 1, 'asdasd', '2024-12-07', 3);
 
 -- --------------------------------------------------------
 
@@ -169,6 +170,27 @@ INSERT INTO `tbl_privacy` (`privacy_id`, `privacy_name`) VALUES
 (1, 'Public'),
 (2, 'Private'),
 (3, 'Only Me');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_reviews`
+--
+
+CREATE TABLE `tbl_reviews` (
+  `review_id` int(11) NOT NULL,
+  `acc_id` int(11) NOT NULL,
+  `review_message` varchar(255) NOT NULL,
+  `review_date` date NOT NULL,
+  `review_star` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_reviews`
+--
+
+INSERT INTO `tbl_reviews` (`review_id`, `acc_id`, `review_message`, `review_date`, `review_star`) VALUES
+(1, 3, 'Magandaaa', '2024-12-10', 4);
 
 -- --------------------------------------------------------
 
@@ -298,6 +320,25 @@ CREATE TABLE `tbl_subscription` (
   `acc_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_subscriptions_type`
+--
+
+CREATE TABLE `tbl_subscriptions_type` (
+  `subs_type` int(11) NOT NULL,
+  `subs_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_subscriptions_type`
+--
+
+INSERT INTO `tbl_subscriptions_type` (`subs_type`, `subs_name`) VALUES
+(1, 'Monthly'),
+(2, 'Yearly');
+
 --
 -- Indexes for dumped tables
 --
@@ -327,6 +368,12 @@ ALTER TABLE `tbl_privacy`
   ADD PRIMARY KEY (`privacy_id`);
 
 --
+-- Indexes for table `tbl_reviews`
+--
+ALTER TABLE `tbl_reviews`
+  ADD PRIMARY KEY (`review_id`);
+
+--
 -- Indexes for table `tbl_role`
 --
 ALTER TABLE `tbl_role`
@@ -351,6 +398,12 @@ ALTER TABLE `tbl_subscription`
   ADD PRIMARY KEY (`subs_id`);
 
 --
+-- Indexes for table `tbl_subscriptions_type`
+--
+ALTER TABLE `tbl_subscriptions_type`
+  ADD PRIMARY KEY (`subs_type`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -364,7 +417,7 @@ ALTER TABLE `tbl_account`
 -- AUTO_INCREMENT for table `tbl_comments`
 --
 ALTER TABLE `tbl_comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `tbl_post_status`
@@ -377,6 +430,12 @@ ALTER TABLE `tbl_post_status`
 --
 ALTER TABLE `tbl_privacy`
   MODIFY `privacy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tbl_reviews`
+--
+ALTER TABLE `tbl_reviews`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_role`
@@ -400,7 +459,13 @@ ALTER TABLE `tbl_spaces_post`
 -- AUTO_INCREMENT for table `tbl_subscription`
 --
 ALTER TABLE `tbl_subscription`
-  MODIFY `subs_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `subs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `tbl_subscriptions_type`
+--
+ALTER TABLE `tbl_subscriptions_type`
+  MODIFY `subs_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

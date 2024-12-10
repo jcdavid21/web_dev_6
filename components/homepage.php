@@ -6,7 +6,7 @@ require_once("../backend/config/config.php");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Home page</title>
     <link rel="stylesheet" href="../styles/header.css">
     <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="../styles/general.css">
@@ -31,7 +31,7 @@ require_once("../backend/config/config.php");
                 <div class="container">
                 <h1>Home Page</h1>
                     <?php 
-                        $query = "SELECT tp.*, td.full_name, td.profile_img, tr.role_name, ts.space_id, ts.space_name, COUNT(tc.posted_id) AS total_comments FROM tbl_spaces_post tp
+                        $query = "SELECT tp.*, td.full_name, td.profile_img, td.job, tr.role_name, ts.space_id, ts.space_name, COUNT(tc.posted_id) AS total_comments FROM tbl_spaces_post tp
                         JOIN tbl_account ta ON tp.acc_id = ta.acc_id
                         JOIN tbl_account_details td ON tp.acc_id = td.acc_id
                         JOIN tbl_role tr ON ta.role_id = tr.role_id
@@ -56,6 +56,26 @@ require_once("../backend/config/config.php");
                                     <div class="h-16">
                                         <img src="<?php echo htmlspecialchars($row["profile_img"]); ?>" alt="Profile Image"
                                         class="h-full rounded-full">
+                                    </div>
+                                    <div class="hover">
+                                        <div class="profile-img">
+                                            <img src="<?php echo $row["profile_img"] ?>" alt="Profile Image">
+                                        </div>
+                                        <div class="">
+                                            <div class="name-details">
+                                                <span>Name: </span>
+                                                <?php echo $row["full_name"] ?>
+                                            </div>
+                                            <div class="job">
+                                                <span>Job Title: </span>
+                                                <?php echo $row["job"] ?>
+                                            </div>
+                                            <a href="./profileDashboard.php?acc_id=<?php echo $row["acc_id"] ?>">
+                                                <div class="view-btn">
+                                                    View Profile
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                 <?php endif; ?>
 

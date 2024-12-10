@@ -8,6 +8,7 @@ body {
     height: 100vh;
     margin-top: 80px;
 }
+
 .center{
     display: grid;
     grid-template-columns: 260px 1fr 280px;
@@ -50,9 +51,11 @@ margin-bottom: 60px;
 }
 
 .content .post-details .left{
+    position: relative;
     display: flex;
     align-items: start;
     gap: 12px;
+    cursor: pointer;
 }
 
 .content .post-details .left .name{
@@ -215,4 +218,59 @@ margin-bottom: 60px;
     justify-content: space-between;
     align-items: start;
     gap: 10px;
+}
+
+.hover{
+    display: none;
+    position: absolute;
+    background-color: #faedda;
+    z-index: 100;
+    top: -80px;
+    right: -140px;
+    border-radius: 6px;
+    padding: 12px;
+    gap: 10px;
+}
+
+.hover .profile-img{
+    height: 60px;
+    width: 60px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.hover .profile-img img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.hover .name-details, .hover .job{
+    display: flex;
+    font-size: 14px;
+    gap: 6px;
+}
+
+.hover .name-details span, .hover .job span{
+    font-weight: 600;
+    color:rgb(55, 55,55);
+}
+
+.hover .view-btn
+{
+    padding: 6px 20px;
+    background-color: #f6a425;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.left:hover .hover{
+    display: flex;
+    align-items: center;
 }

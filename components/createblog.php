@@ -23,7 +23,23 @@
         $user_id = $_SESSION['user_id'];
     } else {
         header('Location: ./signup.php');
+        exit();
     } ?>
+
+    <?php 
+         $querySubsCheck = "SELECT * FROM tbl_subscription WHERE acc_id = ?";
+         $stmtSubsCheck = $conn->prepare($querySubsCheck);
+         $stmtSubsCheck->bind_param('i', $user_id);
+         $stmtSubsCheck->execute();
+         $resultSubsCheck = $stmtSubsCheck->get_result();
+         $rowSubsCheck = $resultSubsCheck->fetch_assoc();
+ 
+         if($resultSubsCheck->num_rows < 1)
+         {
+            echo "<script>window.location.href='./subscription.php'</script>";
+         }
+    ?>
+
     <div id="grid-con" class="overflow-hidden">
         <div class="space">
             <?php include 'spaces.php'; ?>

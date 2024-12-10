@@ -174,3 +174,36 @@ body {
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
 }
+
+.no-reviews{
+    color: #f6a425;
+    font-size: 20px;
+    text-align: center;
+    background-color: white;
+}
+
+.user-con{
+    height: 30px;
+    width: 30px;
+}
+
+.user-con img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.user-flex .name{
+    color: #f6a425;
+    font-weight: 600;
+}
+
+.details .date{
+    font-weight: 500;
+}
+
+.details{
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f6a425;
+}
