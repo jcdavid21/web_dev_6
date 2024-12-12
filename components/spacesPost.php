@@ -114,9 +114,41 @@ require_once("../backend/config/config.php");
                                     <?php } ?>
                                 <?php } ?>
                             </div>
-                        
+
 
                     </div>
+                    <div class="content">
+                        <div class="header text-center mb-4">
+                            <h1 class="text-2xl font-bold text-gray-800">Chsk-@ Space Assistant</h1>
+                        </div>
+                        <div class="input-container flex items-center space-x-4 mb-4">
+                            <input
+                                    type="text"
+                                    id="text"
+                                    placeholder="Ask me anything about <?php echo $userData['space_name']; ?>"
+                                    class="flex-grow p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-oran-500 text-gray-700"
+                            >
+                            <button
+                                    onclick="ai_generateResponse();"
+                                    class="bg-[#f6a425] text-white px-4 py-2 rounded hover:bg-[#d48b20] transition duration-300 flex items-center"
+                            >
+                                <i class="fas fa-paper-plane mr-1"></i>
+                                Generate
+                            </button>
+                        </div>
+                        <div
+                                id="response-container"
+                                class="response-container bg-white border border-gray-200 rounded p-2 min-h-[100px] max-h-[200px] overflow-y-auto hidden"
+                        >
+                            <div
+                                    id="response"
+                                    class="text-gray-700 text-sm leading-normal"
+                            >
+                                <p class="text-gray-500 italic">Responses will appear here...</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <?php 
                         $query = "SELECT tp.*, td.full_name, td.profile_img, td.job, tr.role_name, ts.space_id, ts.space_name, COUNT(tc.posted_id) AS total_comments FROM tbl_spaces_post tp
                         JOIN tbl_account ta ON tp.acc_id = ta.acc_id
@@ -418,6 +450,7 @@ require_once("../backend/config/config.php");
 <script src="../jquery/vote.js"></script>
 <script src="../jquery/updatePost.js"></script>
 <script src="../jquery/spacesJoin.js"></script>
+<script src="../js/ai_script.js"></script>
 <script>
     const dropdownToggle = document.querySelectorAll('.dropdown-toggle');
     const dropdownMenu = document.querySelectorAll('.dropdown-menu');
