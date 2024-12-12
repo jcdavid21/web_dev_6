@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 10, 2024 at 03:03 PM
+-- Generation Time: Dec 12, 2024 at 01:58 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -44,7 +44,8 @@ INSERT INTO `tbl_account` (`acc_id`, `acc_email`, `acc_username`, `acc_password`
 (3, 'chesca@gmail.com', 'Chesca', '$2y$10$VQP6fzmGhwa/YZz78lPVGeK0gFbMccfSmoAtp4PowDThTuyd9vdx.', 1),
 (4, 'krizzy@gmail.com', 'krizzy', '$2y$10$TxsbmjT8CbvabkQoaRWQTOomEp9rCzI1jEWqRoWABxechE9H6VfgW', 1),
 (5, 'golden@gmail.com', 'golden', '$2y$10$G3l8qyo4gPLHyekWVo6jG.FA4fBZmvaNGr7sDB5aWGuGLZh1N06Ze', 1),
-(6, 'ayumi@gmail.com', 'ayumi', '$2y$10$Ixyfyx.63kC0sdoswvw8seaaNOI7KVWJwZKaCPoB.pe.ZOQtdhfT2', 1);
+(6, 'ayumi@gmail.com', 'ayumi', '$2y$10$Ixyfyx.63kC0sdoswvw8seaaNOI7KVWJwZKaCPoB.pe.ZOQtdhfT2', 1),
+(7, 'rainierkahayon@gmail.com', 'rainiercatingco', '$2y$10$Y7y2du/0zPt7Ewda.CamKuwMxc4D.DmlZgdUIl2rgltsjfNg7Q5yi', 1);
 
 -- --------------------------------------------------------
 
@@ -66,11 +67,12 @@ CREATE TABLE `tbl_account_details` (
 --
 
 INSERT INTO `tbl_account_details` (`acc_id`, `full_name`, `birthdate`, `gender`, `job`, `profile_img`) VALUES
-(2, 'Jc Davd', '2002-04-21', 'Male', 'Software Engineer', '../../imgs/profile/67318b0b30ec3_1731300107.jpg'),
+(2, 'Jc Davd', '2002-04-21', 'Male', 'Software Engineer', '../../imgs/profile/67598f069c5fe_1733922566.jpg'),
 (3, 'Chesca Rosales', '2005-08-28', 'Female', 'Information Architect', '../../imgs/profile/6731efa29ee02_1731325858.jpg'),
 (4, 'Krizzy', '2003-04-22', 'Female', NULL, NULL),
 (5, 'Golden Miral', '2001-05-22', 'Male', NULL, NULL),
-(6, 'ayumi', '2004-05-23', 'Female', NULL, NULL);
+(6, 'ayumi', '2004-05-23', 'Female', NULL, NULL),
+(7, 'Rainier Kahayon', '2004-03-12', 'male', 'Full-stack Developer', '../../imgs/profile/675a8699c9204_1733985945.jpeg');
 
 -- --------------------------------------------------------
 
@@ -93,7 +95,8 @@ CREATE TABLE `tbl_comments` (
 INSERT INTO `tbl_comments` (`comment_id`, `posted_id`, `comment`, `comment_date`, `acc_id`) VALUES
 (23, 3, 'g gagi', '2024-12-06', 3),
 (24, 1, 'sadasd', '2024-12-07', 3),
-(25, 1, 'asdasd', '2024-12-07', 3);
+(25, 1, 'asdasd', '2024-12-07', 3),
+(30, 3, 'ok', '2024-12-12', 7);
 
 -- --------------------------------------------------------
 
@@ -117,6 +120,24 @@ INSERT INTO `tbl_credentials` (`acc_id`, `credential_title`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tbl_followed`
+--
+
+CREATE TABLE `tbl_followed` (
+  `acc_id` int(11) NOT NULL,
+  `followed_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_followed`
+--
+
+INSERT INTO `tbl_followed` (`acc_id`, `followed_id`) VALUES
+(7, 3);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tbl_likes`
 --
 
@@ -130,7 +151,8 @@ CREATE TABLE `tbl_likes` (
 --
 
 INSERT INTO `tbl_likes` (`posted_id`, `acc_id`) VALUES
-(1, 3);
+(1, 3),
+(3, 7);
 
 -- --------------------------------------------------------
 
@@ -269,7 +291,9 @@ INSERT INTO `tbl_spaces_joined` (`space_id`, `acc_id`) VALUES
 (12, 4),
 (7, 5),
 (8, 5),
-(9, 5);
+(9, 5),
+(1, 7),
+(2, 7);
 
 -- --------------------------------------------------------
 
@@ -297,12 +321,12 @@ CREATE TABLE `tbl_spaces_post` (
 --
 
 INSERT INTO `tbl_spaces_post` (`posted_id`, `post_title`, `posted_date`, `posted_caption`, `posted_likes`, `posted_share`, `posted_img`, `posted_privacy`, `post_status`, `post_tags`, `space_id`, `acc_id`) VALUES
-(1, 'Technology', '2024-10-10', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 1, 0, '../imgs/post images/post-1.avif', 1, 1, '#Tech', 1, 2),
+(1, 'Technology', '2024-10-10', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 1, 0, '../imgs/post images/post-1.avif', 1, 1, '#Tech#Coding', 1, 2),
 (2, 'Programming', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 0, 0, '../imgs/post images/post-2.avif', 1, 1, '#Fyp', 1, 2),
-(3, 'Play', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 0, 0, '../imgs/post images/post-3.avif', 1, 1, '#Jc#Gaming', 3, 3),
-(4, 'Health', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 0, 0, '../imgs/post images/post-4.avif', 1, 2, '#technology', 2, 3),
+(3, 'Play', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 1, 0, '../imgs/post images/post-3.avif', 1, 1, '#Gaming', 3, 3),
+(4, 'Health', '2024-11-06', 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum consequatur neque ea, laudantium deserunt veritatis sequi mollitia ipsum exercitationem id dolore omnis atque blanditiis quaerat sunt aperiam a voluptatum iure.', 0, 0, '../imgs/post images/post-4.avif', 2, 1, '#technology', 2, 3),
 (8, 'Food', '2024-11-11', 'asdsadas', 0, 0, '../../imgs/post images/Screenshot 2024-11-10 at 7.56.14 PM.png', 1, 2, '#Food,#Health', 3, 2),
-(9, 'Technology', '2024-11-11', 'hahahddbjjxvhifjffnnvd', 0, 0, '../../imgs/post images/reddit-logo-2436.png', 1, 1, '#tech', 1, 3),
+(9, 'Technology', '2024-11-11', 'Lorem', 0, 0, '../../imgs/post images/reddit-logo-2436.png', 3, 1, '#tech', 1, 3),
 (10, 'Gaming', '2024-11-11', 'ahddhdhdahkdah', 0, 0, '../../imgs/post images/reddit-logo-2436.png', 1, 2, '#fun', 2, 3);
 
 -- --------------------------------------------------------
@@ -319,6 +343,14 @@ CREATE TABLE `tbl_subscription` (
   `subs_receipt_img` varchar(255) NOT NULL,
   `acc_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_subscription`
+--
+
+INSERT INTO `tbl_subscription` (`subs_id`, `subs_type`, `subs_start_month`, `subs_end_month`, `subs_receipt_img`, `acc_id`) VALUES
+(3, 2, '2024-12-12', '2025-12-12', '../../imgs/receipts/receipt.jpeg', 3),
+(4, 2, '2024-12-12', '2025-12-12', '../../imgs/receipts/receipt.jpeg', 7);
 
 -- --------------------------------------------------------
 
@@ -411,13 +443,13 @@ ALTER TABLE `tbl_subscriptions_type`
 -- AUTO_INCREMENT for table `tbl_account`
 --
 ALTER TABLE `tbl_account`
-  MODIFY `acc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `acc_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tbl_comments`
 --
 ALTER TABLE `tbl_comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `tbl_post_status`
@@ -453,13 +485,13 @@ ALTER TABLE `tbl_spaces`
 -- AUTO_INCREMENT for table `tbl_spaces_post`
 --
 ALTER TABLE `tbl_spaces_post`
-  MODIFY `posted_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `posted_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tbl_subscription`
 --
 ALTER TABLE `tbl_subscription`
-  MODIFY `subs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `subs_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tbl_subscriptions_type`

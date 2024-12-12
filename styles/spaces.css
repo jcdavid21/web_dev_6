@@ -29,6 +29,7 @@
     align-items: center;
     gap: 10px;
     margin-top: 12px;
+    cursor: pointer;
 }
 
 .spaces-con .joined-spaces .name{
@@ -53,5 +54,10 @@
 }
 
 .recommended-spaces{
+    margin-top: 30px;
+}
+
+
+.created-spaces{
     margin-top: 30px;
 }

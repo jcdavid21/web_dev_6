@@ -27,14 +27,45 @@
                 if($result2->num_rows > 0){
                     while($row2 = $result2->fetch_assoc()){
             ?>
-            <div class="joined-details">
-                <div class="img-con">
-                    <img src="<?php echo $row2["space_img"] ?>" alt="">
+            <a href="./spacesPost.php?space_id=<?php echo $row2["space_id"] ?>">
+                <div class="joined-details">
+                    <div class="img-con">
+                        <img src="<?php echo $row2["space_img"] ?>" alt="">
+                    </div>
+                    <div class="name"><?php echo $row2["space_name"] ?></div>
                 </div>
-                <div class="name"><?php echo $row2["space_name"] ?></div>
-            </div>
+            </a>
             <?php 
                     }
+                }
+            ?>
+        </div>
+
+        <!-- created spaces -->
+        <div class="created-spaces joined-spaces">
+            <div class="title">Created Spaces</div>
+            <?php 
+                $query4 = "SELECT * FROM tbl_spaces WHERE acc_id = ? ORDER BY space_name ASC";
+                $stmt4 = $conn->prepare($query4);
+                $stmt4->bind_param('i', $user_id);
+                $stmt4->execute();
+                $result4 = $stmt4->get_result();
+
+                if($result4->num_rows > 0){
+                    while($row4 = $result4->fetch_assoc()){
+            ?>
+            <a href="./spacesPost.php?space_id=<?php echo $row4["space_id"] ?>">
+                <div class="joined-details">
+                    <div class="img-con">
+                        <img src="<?php echo $row4["space_img"] ?>" alt="">
+                    </div>
+                    <div class="name"><?php echo $row4["space_name"] ?></div>
+                </div>
+            </a>
+            <?php 
+                    }
+                }else{
+                    echo "No created spaces available.";
                 }
             ?>
         </div>
@@ -51,12 +82,14 @@
                     if($result3->num_rows > 0){
                         while($row3 = $result3->fetch_assoc()){
                 ?>
-                        <div class="joined-details">
-                            <div class="img-con">
-                                <img src="<?php echo $row3["space_img"] ?>" alt="">
-                            </div>
-                            <div class="name"><?php echo $row3["space_name"] ?></div>
+                <a href="./spacesPost.php?space_id=<?php echo $row3["space_id"] ?>">
+                    <div class="joined-details">
+                        <div class="img-con">
+                            <img src="<?php echo $row3["space_img"] ?>" alt="">
                         </div>
+                        <div class="name"><?php echo $row3["space_name"] ?></div>
+                    </div>
+                </a>
                 <?php
                         }
                     } else {

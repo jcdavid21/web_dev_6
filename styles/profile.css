@@ -26,7 +26,7 @@
 }
 
 .profile-con .profile-center .img-con img{
-    object-fit: contain;
+    object-fit: cover;
     height: 100%;
     width: 100%;
 }
@@ -113,4 +113,23 @@
 .delete-credential{
     color: red;
     cursor: pointer;
+}
+
+
+.edit button
+{
+    margin-top: 6px;
+    padding: 2px 20px;
+    background-color: white;
+    color: #f6a425;
+    border: 1px solid #f6a425;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.edit button:hover{
+    background-color: #f6a425;
+    color: white;
 }

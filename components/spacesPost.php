@@ -11,6 +11,7 @@ require_once("../backend/config/config.php");
     <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="../styles/general.css">
     <link rel="stylesheet" href="../styles/Homepage.css">
+    <link rel="stylesheet" href="../styles/profile.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -37,10 +38,85 @@ require_once("../backend/config/config.php");
             include 'spaces.php';
             }else{
                 echo '<div class="space"></div>';
+                echo "<script>window.location.href = './signup.php';</script>";
             } ?>
+            <?php
+                $space_id = '';
+                if($_GET["space_id"]){
+                    $space_id = $_GET["space_id"];
+                }else{
+                    echo "<script>window.location.href = './signup.php';</script>";
+                }
+            ?>
             <div style="display: flex; align-items: center; justify-content: center;">
                 <div class="container">
-                <h1>Home Page</h1>
+                    <div class="profile-header flex justify-between items-start mb-10 bg-gray-50 p-6">
+                        <?php 
+                            $queryData = "SELECT * FROM tbl_spaces WHERE space_id = ?";
+                            $stmtData = $conn->prepare($queryData);
+                            $stmtData->bind_param("i", $space_id);
+                            $stmtData->execute();
+                            $resultData = $stmtData->get_result();
+                            $userData = $resultData->fetch_assoc();
+                        ?>
+                        <div class="flex gap-4">
+                            <div class="img-con h-44 w-44">
+                                <?php if (empty($userData["space_img"])): ?>
+                                    <i class="fa-regular fa-circle-user"
+                                    style="font-size: 80px;" ></i>
+                                <?php else: ?>
+                                    <img src="<?php echo $userData["space_img"] ?>" alt="Profile Image" class="h-full w-full rounded-full">
+                                <?php endif; ?>
+                            </div>
+                            <div class="name mt-4">
+                                <div class="job" style="font-size: 24px;">
+                                    <?php echo $userData["space_name"] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php 
+                            // Check if the user is the owner of the space
+                            $queryOwner = "SELECT * FROM tbl_spaces WHERE acc_id = ? AND space_id = ?";
+                            $stmtOwner = $conn->prepare($queryOwner);
+                            $stmtOwner->bind_param('ii', $user_id, $space_id);
+                            $stmtOwner->execute();
+                            $resultOwner = $stmtOwner->get_result();
+                            $isOwner = $resultOwner->num_rows > 0; // Check if user owns the space
+
+                            $posted_privacy = "IN (1, 2)";
+
+                            if (!$isOwner) { // Only check subscription if the user is not the owner
+                                $querySubsCheck = "SELECT * FROM tbl_spaces_joined WHERE acc_id = ? AND space_id = ?";
+                                $stmtSubsCheck = $conn->prepare($querySubsCheck);
+                                $stmtSubsCheck->bind_param('ii', $user_id, $space_id);
+                                $stmtSubsCheck->execute();
+                                $resultSubsCheck = $stmtSubsCheck->get_result();
+                                $isSubscribed = $resultSubsCheck->num_rows > 0; // Check if user has joined the space
+
+                                if($isSubscribed){
+                                    $posted_privacy = "IN (1, 2)";
+                                }else{
+                                    $posted_privacy = "IN (1)";
+                                }
+                            }
+                            ?>
+                            <div class="flex flex-column gap-4 mt-4">
+                                <?php if ($isOwner) { ?>
+                                    <!-- Show Edit and Delete buttons if the user is the owner -->
+                                    <button class="edit-space follow-btn" data-space-id="<?php echo $space_id; ?>">Edit Space</button>
+                                    <button class="delete-space follow-btn" data-space-id="<?php echo $space_id; ?>">Delete Space</button>
+                                <?php } else { ?>
+                                    <!-- Show Join or Leave button if the user is not the owner -->
+                                    <?php if (!$isSubscribed) { ?>
+                                        <button class="join-space follow-btn" data-space-id="<?php echo $space_id; ?>">Join Space</button>
+                                    <?php } else { ?>
+                                        <button class="leave-space follow-btn" data-space-id="<?php echo $space_id; ?>">Leave Space</button>
+                                    <?php } ?>
+                                <?php } ?>
+                            </div>
+                        
+
+                    </div>
                     <?php 
                         $query = "SELECT tp.*, td.full_name, td.profile_img, td.job, tr.role_name, ts.space_id, ts.space_name, COUNT(tc.posted_id) AS total_comments FROM tbl_spaces_post tp
                         JOIN tbl_account ta ON tp.acc_id = ta.acc_id
@@ -48,12 +124,15 @@ require_once("../backend/config/config.php");
                         JOIN tbl_role tr ON ta.role_id = tr.role_id
                         JOIN tbl_spaces ts ON tp.space_id = ts.space_id
                         LEFT JOIN tbl_comments tc ON tp.posted_id = tc.posted_id
-                        WHERE tp.posted_privacy = 1 AND tp.post_status = 1
+                        WHERE tp.space_id = ? AND tp.posted_privacy $posted_privacy  and tp.post_status = 1
                         GROUP BY tp.posted_id
                         ORDER BY tp.posted_date DESC";
                         $stmt = $conn->prepare($query);
+                        $stmt->bind_param("i", $space_id);
                         $stmt->execute();
                         $result = $stmt->get_result();
+                        
+                    if($result->num_rows > 0){
                         
                         while($row = $result->fetch_assoc()){
                             $dateFormated = date('M d, Y', strtotime($row["posted_date"]));
@@ -102,7 +181,6 @@ require_once("../backend/config/config.php");
                                         }
                                         
                                     ?>
-                                    
                                     <div class="date"><?php echo $dateFormated ?></div>
                                 </div>
                             </div>
@@ -142,7 +220,7 @@ require_once("../backend/config/config.php");
                                         </div>
                                         <div class="modal-body">
                                             <form>
-
+                                            
                                             <!-- privacy -->
                                             <div class="form-group mb-3">
                                                 <label for="posted_privacy" class="col-form-label">Privacy:</label>
@@ -276,18 +354,19 @@ require_once("../backend/config/config.php");
                                     ?>
                                     <div class="flex justify-between gap-2 comment-container" data-comment-con-id="<?php echo $row2['comment_id']; ?>">
                                         <div class="comment">
-                                            <a href="./profileDashboard.php?acc_id=<?php echo $row2["acc_id"] ?>">
-                                                <div class="left">
+                                            <div class="left">
+                                                <a href="./profileDashboard.php?acc_id=<?php echo $row2["acc_id"] ?>">
                                                     <?php if (empty($row2["profile_img"])): ?>
-                                                        <i class="fa-regular fa-circle-user"></i>
+                                                        <i class="fa-regular fa-circle-user"
+                                                        style="font-size: 22px;"></i>
                                                     <?php else: ?>
                                                         <div class="h-16 w-16">
                                                             <img src="<?php echo htmlspecialchars($row2["profile_img"]); ?>" alt="Profile Image"
-                                                            class="h-full rounded-full w-16">
+                                                            class="h-full rounded-full w-full">
                                                         </div>
                                                     <?php endif; ?>
-                                                </div>
-                                            </a>
+                                                </a>
+                                            </div>
                                         </div>
                                         <div class="right">
                                             <div class="flex gap-2 text-sm right-details">
@@ -319,15 +398,17 @@ require_once("../backend/config/config.php");
                             </div>
                         </div>
                     </div>
-                    <?php } ?>
+                    <?php }}else{
+                        echo "<div class='no-post'>No post available / Join Space</div>";
+                    } ?>
 
                 </div>
             </div>
-            <?php 
+            <?php
                 if(!empty($user_id)){
+                    include 'profile.php';
+                }
             ?>
-            <?php include 'profile.php'; ?>
-            <?php } ?>
         </div>
     </main>
 
@@ -336,6 +417,7 @@ require_once("../backend/config/config.php");
 <script src="../jquery/comments.js"></script>
 <script src="../jquery/vote.js"></script>
 <script src="../jquery/updatePost.js"></script>
+<script src="../jquery/spacesJoin.js"></script>
 <script>
     const dropdownToggle = document.querySelectorAll('.dropdown-toggle');
     const dropdownMenu = document.querySelectorAll('.dropdown-menu');

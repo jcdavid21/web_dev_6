@@ -32,7 +32,7 @@
             <button><i class="fas fa-search"></i></button>
         </div>
         
-        <div class="nav-icons">
+        <div class="nav-icons mr-5">
             <a href="./homepage.php" class="nav-icon"><i class="fas fa-home"></i><span>Home</span></a>
 
             <a href="#" class="nav-icon spaces"><i class="fas fa-rocket"></i><span>Spaces</span>
@@ -49,11 +49,13 @@
                         if($result->num_rows > 0){
                             while($row = $result->fetch_assoc()){
                     ?>
-                    <div class="space">
+                    <div class="space" data-space-id="<?php echo htmlspecialchars($row['space_id'], ENT_QUOTES, 'UTF-8'); ?>">
                         <div class="img-con">
-                            <img src="<?php echo $row["space_img"] ?>" alt="">
+                            <img src="<?php echo htmlspecialchars($row['space_img'], ENT_QUOTES, 'UTF-8'); ?>" alt="">
                         </div>
-                        <?php echo $row["space_name"] ?>
+                        <div class="space-name">
+                            <?php echo htmlspecialchars($row['space_name'], ENT_QUOTES, 'UTF-8'); ?>
+                        </div>
                     </div>
                     <?php 
                             }
@@ -162,8 +164,23 @@
             if(!empty($user_id)){
          ?>
             <div class="account">
-                <a href="./account.php" class="nav-icon"><i class="fa-solid fa-user"></i><span>Account</span></a>
+                <a href="./profileDashboard.php?acc_id=<?php echo $user_id ?>" class="nav-icon"><i class="fa-solid fa-user"></i><span>Account</span></a>
             </div>
         <?php } ?>
     </div>
 </nav>
+
+<script>
+const spaces = document.querySelectorAll('.space');
+
+spaces.forEach((space) => {
+    space.addEventListener('click', (e) => {
+        // Ensure the correct element with the `data-space-id` is targeted
+        const spaceId = space.getAttribute('data-space-id');
+        if (spaceId) {
+            window.location.href = `./spacesPost.php?space_id=${spaceId}`;
+        }
+    });
+});
+
+</script>

@@ -38,6 +38,15 @@
                 <div>Age: <span class="age"><?php echo $age ? $age : 'N/A'; ?></span></div>
                 <div>Gender: <span class="gender"><?php echo htmlspecialchars($user_data['gender']); ?></span></div>
             </div>
+            <?php 
+                if(!empty($user_id)){
+            ?>
+            <a href="./account.php">
+                <div class="edit">
+                    <button id="edit-profile">Edit</button>
+                </div>
+            </a>
+            <?php } ?>
         </div>
 
         <div class="credentials">

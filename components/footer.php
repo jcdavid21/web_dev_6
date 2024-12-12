@@ -23,7 +23,7 @@
         </div>
         
         <div class="footer-logos">
-            <div class="logo-container">
+            <div class="logo-container flex">
                 <img src="../imgs/DDlogo.jpg" alt="DD Logo" class="footer-logo">
                 <img src="../imgs/C6logo.jpg" alt="C6 Logo" class="footer-logo">
             </div>

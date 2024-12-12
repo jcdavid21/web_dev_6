@@ -274,3 +274,75 @@ margin-bottom: 60px;
     display: flex;
     align-items: center;
 }
+
+
+.dot-div{
+    position: relative;
+}
+
+.dot-div .dropdown-menu{
+    display: none;
+    position: absolute;
+    background-color: #faedda;
+    color: rgb(55, 55,55);
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 15px;
+    top: -75px;
+    right: 10px;
+    z-index: 100;
+    text-align: start;
+}
+
+.dropdown-menu li{
+    border-bottom: 1px solid transparent;
+}
+
+.dot-div .dropdown-menu li:hover
+{
+    border-bottom: 1px solid rgba(55, 55, 55, 0.3);
+    cursor: pointer;
+}
+
+.btn-publish .publish
+{
+    margin-top: 20px;
+    padding: 10px 32px;
+    background-color: #f6a425;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-publish .publish:hover{
+    background-color: #f6b655;
+}
+
+.follow-btn, .edit-profile{
+    padding: 6px 32px;
+    border: 2px solid #f6a425;
+    color: rgb(55, 55, 55);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.follow-btn:hover{
+    background-color: #f6a425;
+    color: white;
+}
+
+.name .full-name, .name .job{
+    font-weight: 500;
+    font-size: 17px;
+    color: rgb(55, 55, 55);
+}
+
+.name .job{
+    color: #f6a425;
+}
+

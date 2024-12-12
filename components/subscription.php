@@ -46,8 +46,8 @@
                     </div>
                     <strong>Upgrade to Deep Dive's best blogging services.</strong>
                     <div class="text">
-                        <span>Free 7 day trial.</span>
-                        Cancel anytime. We’ll send an email to remind you 2 days before trial ends.
+                        <span>Try our subscription.</span>
+                        Our subscription gives you access to all of our features and services.
                     </div>
 
                     <div class="flex">
@@ -75,21 +75,21 @@
                     </div>
 
                     <div class="button-con">
-                        <button>Start your 7-days free trial</button>
+                        <button>Start your subscription</button>
                     </div>
                 </div>
             </div>
             <div class="center">
                 <div class="container con-2">
                     <div class="back"><i class="fa-solid fa-chevron-left"></i></div>
-                    <strong>Try being a writer for free</strong>
+                    <strong>Try being a writer</strong>
                     <div class="text">
                         <span><i class="fa-solid fa-check"></i></span>
-                        Free 7 day trial, cancel anytime
+                        No commitment, cancel anytime
                     </div>
                     <div class="text">
                         <span><i class="fa-solid fa-check"></i></span>
-                        Email will remind you before your trial ends
+                        Everything on Deep Dive Pro
                     </div>
                     <div class="select">
                         <div class="flex">
@@ -143,7 +143,9 @@
                             <div>Starting today</div>
                         </div>
 
-                        <div>1-week/free trial</div>
+                        <div>
+                            Monthly / Yearly
+                        </div>
                     </div>
 
                     <div class="flex">
@@ -185,7 +187,7 @@
                         <div class="img-con">
                             <img src="../imgs/gcash.png" alt="">
                         </div>
-                        <input type="number" maxlength="11" id="gcashInput" placeholder="Gcash number">
+                        <input type="text" maxlength="11" id="gcashInput" placeholder="Gcash number">
                     </div>
 
                     <div class="receipt">
@@ -240,6 +242,11 @@
     const backButtons = document.querySelectorAll(".back");
     backButtons.forEach(button => {
         button.addEventListener("click", showPreviousContainer);
+    });
+
+    // gcashInput numbers only
+    document.getElementById('gcashInput').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
     });
 });
 
