@@ -48,7 +48,7 @@
 }
 
 .spaces-con .joined-spaces .joined-details .img-con img{
-    object-fit: contain;
+    object-fit: cover;
     height: 100%;
     width: 100%;
 }
@@ -60,4 +60,60 @@
 
 .created-spaces{
     margin-top: 30px;
+}
+
+.container-search{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+}
+
+.container-search .img-con{
+    height: 70px;
+    width: 70px;
+    border-radius: 100%;
+    overflow: hidden;
+}
+
+.container-search .img-con img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.btn-view button{
+    padding: 8px 20px;
+    background-color: #f6a425;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-view button:hover{
+    background-color: #e39e35;
+}
+
+.cont-search{
+    margin-top: 20px;
+    background: #faf2e3;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.name .space_name{
+    font-size: 28px;
+    font-weight: 500;
+    color: #f6a425;
+}
+
+.name .space_owner{
+    font-size: 14px;
+    color: rgb(55, 55, 55);
 }

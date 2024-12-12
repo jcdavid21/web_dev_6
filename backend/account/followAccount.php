@@ -20,5 +20,13 @@
         {
             echo "failed";
         }
+
+        $activity = "followed you";
+
+        $queryNotif = "INSERT INTO tbl_notifications (notif_activity, user_id, acc_id) VALUES (?, ?, ?)";
+        $stmtNotif = $conn->prepare($queryNotif);
+        $stmtNotif->bind_param("sii", $activity, $user_id, $acc_id);
+        $stmtNotif->execute();
+
     }
 ?>

@@ -183,9 +183,8 @@
 <body>
    <?php include 'header.php'; ?>
     <!-- Organizational Chart -->
-    <div class="grid-con">
-        <?php include 'spaces.php'; ?>
-        <div class="org-chart">
+     <div class="center">
+     <div class="org-chart">
             <h1>Organizational Chart</h1>
 
             <!-- Team Leader -->
@@ -224,7 +223,7 @@
                 </div>
             </div>
         </div>
-    </div>
+     </div>
 
     <?php include 'footer.php'; ?>
     <script src="../js/sidebar.js"></script>

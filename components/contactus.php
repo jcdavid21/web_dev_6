@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="../styles/contact.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Contact Us</title>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <?php include 'header.php'; ?>
@@ -21,12 +24,12 @@
                     <div class="text">We are here to help you. Please fill out the form below and we will get back to you as soon as possible.</div>
                     <div class="div">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" placeholder="Full name">
+                        <input type="text" id="name" placeholder="Full name">
                     </div>
 
                     <div class="div">
                         <i class="fa-solid fa-envelope"></i>
-                        <input type="text" placeholder="Email">
+                        <input type="text" id="email" placeholder="Email">
                     </div>
 
                     <textarea name="message" id="message" >Message</textarea>
@@ -44,5 +47,6 @@
     <?php include 'footer.php'; ?>
 
     <script src="../js/sidebar.js"></script>
+    <script src="../jquery/contactUs.js"></script>
 </body>
 </html>

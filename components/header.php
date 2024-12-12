@@ -28,14 +28,14 @@
             </div>
        </div>
         <div class="search-box">
-            <input type="text" placeholder="Search...">
-            <button><i class="fas fa-search"></i></button>
+            <input type="text" id="search" placeholder="Search...">
+            <button id="searchBtn"><i class="fas fa-search"></i></button>
         </div>
         
         <div class="nav-icons mr-5">
             <a href="./homepage.php" class="nav-icon"><i class="fas fa-home"></i><span>Home</span></a>
 
-            <a href="#" class="nav-icon spaces"><i class="fas fa-rocket"></i><span>Spaces</span>
+            <div class="nav-icon spaces" style="cursor: pointer;"><i class="fas fa-rocket"></i><span>Spaces</span>
                 <?php if(!empty($user_id)){ ?>
 
                 <div class="hover-div">
@@ -57,95 +57,136 @@
                             <?php echo htmlspecialchars($row['space_name'], ENT_QUOTES, 'UTF-8'); ?>
                         </div>
                     </div>
+
                     <?php 
                             }
                         }
                     ?>
 
-                    <div class="add-more">
-                        +
-                    </div>
+                    <a href="./addSpaces.php">
+                        <div class="add-more">
+                            +
+                        </div>
+                    </a>
                 </div>
                 <?php } ?>
-            </a>
+            </div>
             
             <?php 
                 if(!empty($user_id)){
             ?>
-            <a href="#" class="nav-icon following"><i class="fas fa-user-friends"></i><span>Following</span>
+            <div class="nav-icon following"><i class="fas fa-user-friends"></i><span>Following</span>
                 <div class="hover-div">
                     <div class="icons-outer">
                         <div class="title">Followed Spaces</div>
                         <div class="icons">
-                            <div class="img-con">
-                                <img src="../imgs/reddit-logo-2436.png" alt="">
-                            </div>
-
-                            <div class="img-con">
-                                <img src="../imgs/reddit-logo-2436.png" alt="">
-                            </div>
-
-                            <div class="img-con">
-                                <img src="../imgs/reddit-logo-2436.png" alt="">
-                            </div>
+                            <?php 
+                                $query = "SELECT tj.*, ts.space_name, ts.space_img FROM tbl_spaces_joined tj 
+                                JOIN tbl_spaces ts ON tj.space_id = ts.space_id
+                                WHERE tj.acc_id = ? ORDER BY RAND() LIMIT 3";
+                                $stmt = $conn->prepare($query);
+                                $stmt->bind_param('i', $user_id);
+                                $stmt->execute();
+                                $result = $stmt->get_result();
+                                
+                                if($result->num_rows > 0){
+                                    while($row = $result->fetch_assoc()){
+                            ?>
+                                <a href="./spacesPost.php?space_id=<?php echo $row["space_id"] ?>">
+                                    <div class="img-con">
+                                        <img src="../<?php echo str_replace("../", "", $row["space_img"]) ?>" alt="">
+                                    </div>
+                                </a>
+                        <?php 
+                                }
+                            }
+                        ?>
                         </div>
                     </div>
                     
                     <div class="followed-div">
-                        <div class="title">Followed User & Author</div>
+                        <div class="title">Followed User</div>
 
-                        <div class="info-det">
-                            <div class="img-con">
-                                <img src="../imgs/reddit-logo-2436.png" alt="">
-                            </div>
-                            <div class="name">
-                                Krizzy Cruz
-                                <div class="author">Author</div>
-                            </div>
-                        </div>
+                        <?php 
+                            $query2 = "SELECT * FROM tbl_followed tf
+                                    JOIN tbl_account_details td ON tf.followed_id = td.acc_id
+                                    WHERE tf.acc_id = ? ORDER BY RAND() LIMIT 3";
+                            $stmt2 = $conn->prepare($query2);
+                            $stmt2->bind_param('i', $user_id);
+                            $stmt2->execute();
+                            $result2 = $stmt2->get_result();
 
-                        <div class="info-det">
-                            <div class="img-con">
-                                <img src="../imgs/reddit-logo-2436.png" alt="">
-                            </div>
-                            <div class="name">
-                                Jc David
-                            </div>
-                        </div>
+                            if ($result2->num_rows > 0) {
+                                while ($row2 = $result2->fetch_assoc()) {
+                        ?>
+                                <a href="./profileDashboard.php?acc_id=<?php echo $row2["acc_id"] ?>">
+                                    <div class="info-det">
+                                        <div class="img-con">
+                                            <img src="../<?php echo htmlspecialchars(str_replace("../", "", $row2["profile_img"])); ?>" 
+                                                alt="Profile Image"
+                                                style="border-radius: 100%; object-fit: cover; height: 36px; width: 42px;">
+                                        </div>
+                                        <div class="name">
+                                            <?php echo htmlspecialchars($row2["full_name"]); ?>
+                                            <div class="author">Author</div>
+                                        </div>
+                                    </div>
+                                </a>
+                        <?php 
+                                }
+                            } else {
+                                echo "<div class='info-det'>No followed accounts found.</div>";
+                            }
+                        ?>
+
                     </div>
                 </div>
-            </a>
+            </div>
             <?php } ?>
             <?php 
                 if(!empty($user_id)){
             ?>
-            <a href="#" class="nav-icon following"><i class="fas fa-bell"></i><span>Notifications</span>
+            <div class="nav-icon following"><i class="fas fa-bell"></i><span>Notifications</span>
                 <div class="hover-div">
                     <div class="followed-div">
                         <div class="title">Notifications</div>
+                        <?php 
+                            $queryNotif = "SELECT tn.*, td.full_name, td.profile_img FROM tbl_notifications tn
+                            JOIN tbl_account_details td ON tn.user_id = td.acc_id
+                            WHERE tn.acc_id = ? ORDER BY tn.notif_date DESC LIMIT 3";
+                            $stmtNotif = $conn->prepare($queryNotif);
+                            $stmtNotif->bind_param('i', $user_id);
+                            $stmtNotif->execute();
+                            $resultNotif = $stmtNotif->get_result();
 
-                        <div class="info-det">
-                            <div class="img-con">
-                                <img src="../imgs/reddit-logo-2436.png" alt="">
+                            if($resultNotif->num_rows > 0){
+                                while($rowNotif = $resultNotif->fetch_assoc()){
+                        ?>
+                        <a href="./profileDashboard.php?acc_id=<?php echo $rowNotif["user_id"] ?>">
+                            <div class="info-det">
+                                <div class="img-con">
+                                    <img src="../<?php echo htmlspecialchars(str_replace("../", "", $rowNotif["profile_img"])); ?>" 
+                                        alt="Profile Image"
+                                        style="border-radius: 100%; object-fit: cover; height: 36px; width: 42px;">
+                                </div>
+                                <div class="name">
+                                    <?php echo htmlspecialchars($rowNotif["full_name"]); ?>
+                                    <div class="author">
+                                        <?php echo htmlspecialchars($rowNotif["notif_activity"]); ?>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="name name-notif">
-                                Krizzy Cruz liked your post
-                                <div class="author">1 min ago</div>
-                            </div>
-                        </div>
+                        </a>
+                        <?php 
+                                }
+                            }else{
+                                echo "<div class='info-det'>No notifications found.</div>";
+                            }
+                        ?>
 
-                        <div class="info-det">
-                            <div class="img-con">
-                                <img src="../imgs/reddit-logo-2436.png" alt="">
-                            </div>
-                            <div class="name name-notif">
-                                Jc David Comment on your post
-                                <div class="author">1 min ago</div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-            </a>
+        </div>
             <?php } ?>
             <?php 
                 if(empty($user_id)){
@@ -181,6 +222,15 @@ spaces.forEach((space) => {
             window.location.href = `./spacesPost.php?space_id=${spaceId}`;
         }
     });
+});
+
+const searchBtn = document.getElementById('searchBtn');
+
+searchBtn.addEventListener('click', (e) => {
+    const search = document.getElementById('search').value;
+    if (search) {
+        window.location.href = `./searched.php?search=${search}`;
+    }
 });
 
 </script>

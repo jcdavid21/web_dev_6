@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 12, 2024 at 01:58 PM
+-- Generation Time: Dec 12, 2024 at 06:26 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.0.28
 
@@ -96,7 +96,8 @@ INSERT INTO `tbl_comments` (`comment_id`, `posted_id`, `comment`, `comment_date`
 (23, 3, 'g gagi', '2024-12-06', 3),
 (24, 1, 'sadasd', '2024-12-07', 3),
 (25, 1, 'asdasd', '2024-12-07', 3),
-(30, 3, 'ok', '2024-12-12', 7);
+(30, 3, 'ok', '2024-12-12', 7),
+(35, 3, 'hahahah', '2024-12-12', 2);
 
 -- --------------------------------------------------------
 
@@ -133,7 +134,10 @@ CREATE TABLE `tbl_followed` (
 --
 
 INSERT INTO `tbl_followed` (`acc_id`, `followed_id`) VALUES
-(7, 3);
+(7, 3),
+(2, 3),
+(2, 7),
+(3, 2);
 
 -- --------------------------------------------------------
 
@@ -153,6 +157,29 @@ CREATE TABLE `tbl_likes` (
 INSERT INTO `tbl_likes` (`posted_id`, `acc_id`) VALUES
 (1, 3),
 (3, 7);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_notifications`
+--
+
+CREATE TABLE `tbl_notifications` (
+  `notif_id` int(11) NOT NULL,
+  `notif_activity` varchar(255) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `acc_id` int(11) NOT NULL,
+  `notif_date` date DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tbl_notifications`
+--
+
+INSERT INTO `tbl_notifications` (`notif_id`, `notif_activity`, `user_id`, `acc_id`, `notif_date`) VALUES
+(7, 'followed you', 3, 2, '2024-12-13'),
+(8, 'Commented on your post', 2, 3, '2024-12-13'),
+(9, 'joined your space', 3, 2, '2024-12-13');
 
 -- --------------------------------------------------------
 
@@ -252,10 +279,10 @@ CREATE TABLE `tbl_spaces` (
 
 INSERT INTO `tbl_spaces` (`space_id`, `space_name`, `space_img`, `acc_id`) VALUES
 (1, 'Technology', '../imgs/spaces/reddit-logo.png', 2),
-(2, 'Gaming', '../imgs/spaces/reddit-logo.png', 2),
+(2, 'Gaming', '../../imgs/spaces/space_675b02ae14de66.43455991.png', 2),
 (3, 'Health and Wellness', '../imgs/spaces/reddit-logo.png', 2),
 (4, 'History and Archeology', '../imgs/spaces/reddit-logo.png', 3),
-(5, 'Culture', '../imgs/spaces/reddit-logo.png', 3),
+(5, 'Culture', '../../imgs/spaces/space_675b05f9aaeb90.73026306.png', 3),
 (6, 'Science and Nature', '../imgs/spaces/reddit-logo.png', 3),
 (7, 'Home Improvement', '../imgs/spaces/reddit-logo.png', 4),
 (8, 'Food and Cooking', '../imgs/spaces/reddit-logo.png', 4),
@@ -284,7 +311,6 @@ INSERT INTO `tbl_spaces_joined` (`space_id`, `acc_id`) VALUES
 (5, 2),
 (6, 2),
 (1, 3),
-(2, 3),
 (3, 3),
 (10, 4),
 (11, 4),
@@ -293,7 +319,8 @@ INSERT INTO `tbl_spaces_joined` (`space_id`, `acc_id`) VALUES
 (8, 5),
 (9, 5),
 (1, 7),
-(2, 7);
+(2, 7),
+(2, 3);
 
 -- --------------------------------------------------------
 
@@ -388,6 +415,12 @@ ALTER TABLE `tbl_comments`
   ADD PRIMARY KEY (`comment_id`);
 
 --
+-- Indexes for table `tbl_notifications`
+--
+ALTER TABLE `tbl_notifications`
+  ADD PRIMARY KEY (`notif_id`);
+
+--
 -- Indexes for table `tbl_post_status`
 --
 ALTER TABLE `tbl_post_status`
@@ -449,7 +482,13 @@ ALTER TABLE `tbl_account`
 -- AUTO_INCREMENT for table `tbl_comments`
 --
 ALTER TABLE `tbl_comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+
+--
+-- AUTO_INCREMENT for table `tbl_notifications`
+--
+ALTER TABLE `tbl_notifications`
+  MODIFY `notif_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tbl_post_status`
@@ -479,13 +518,13 @@ ALTER TABLE `tbl_role`
 -- AUTO_INCREMENT for table `tbl_spaces`
 --
 ALTER TABLE `tbl_spaces`
-  MODIFY `space_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `space_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `tbl_spaces_post`
 --
 ALTER TABLE `tbl_spaces_post`
-  MODIFY `posted_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `posted_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `tbl_subscription`

@@ -58,6 +58,10 @@ require_once("../backend/config/config.php");
                             $stmtData->execute();
                             $resultData = $stmtData->get_result();
                             $userData = $resultData->fetch_assoc();
+
+                            if($resultData->num_rows < 1){
+                                echo "<script>window.location.href = './addSpaces.php';</script>";
+                            }
                         ?>
                         <div class="flex gap-4">
                             <div class="img-con h-44 w-44">
@@ -71,6 +75,17 @@ require_once("../backend/config/config.php");
                             <div class="name mt-4">
                                 <div class="job" style="font-size: 24px;">
                                     <?php echo $userData["space_name"] ?>
+                                </div>
+                                <div class="count-joined">
+                                    <?php
+                                        $queryJoined = "SELECT COUNT(*) AS total_joined FROM tbl_spaces_joined WHERE space_id = ?";
+                                        $stmtJoined = $conn->prepare($queryJoined);
+                                        $stmtJoined->bind_param("i", $space_id);
+                                        $stmtJoined->execute();
+                                        $resultJoined = $stmtJoined->get_result();
+                                        $rowJoined = $resultJoined->fetch_assoc();
+                                    ?>
+                                    <span class="font-semibold"><?php echo $rowJoined["total_joined"] ?> Joined</span>
                                 </div>
                             </div>
                         </div>
@@ -103,8 +118,54 @@ require_once("../backend/config/config.php");
                             <div class="flex flex-column gap-4 mt-4">
                                 <?php if ($isOwner) { ?>
                                     <!-- Show Edit and Delete buttons if the user is the owner -->
-                                    <button class="edit-space follow-btn" data-space-id="<?php echo $space_id; ?>">Edit Space</button>
+                                    <button class="edit-space follow-btn"
+                                    data-space-id="<?php echo $space_id; ?>"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#spaceModal<?php echo $row['space_id']; ?>"
+                                    >Edit Space</button>
                                     <button class="delete-space follow-btn" data-space-id="<?php echo $space_id; ?>">Delete Space</button>
+
+                                <div class="modal fade" id="spaceModal<?php echo $row['space_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Edit your space</h5>
+                                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form>
+
+                                            <div class="form-group">
+                                                <label for="space_name" class="col-form-label">Space name:</label>
+                                                <input type="text" class="form-control" id="space_name" value="<?php echo $fetchOwner["space_name"] ?>">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="space_img" class="col-form-label">Space Image:</label>
+                                                <div class="img d-flex justify-content-center">
+                                                    <img src="<?php echo $fetchOwner["space_img"] ?>" alt="Space Image"
+                                                    class="object-cover rounded-full spaceImg"
+                                                    style="height: 250px; width:250px;">
+                                                </div>
+                                            </div>
+
+                                            <!-- update image -->
+                                            <div class="form-group mb-3">
+                                                <label for="space_img" class="col-form-label">Update Image:</label>
+                                                <input type="file" class="form-control" id="space_img" accept="image/*">
+                                            </div>
+
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary update-space" data-space-id="<?php echo $fetchOwner["space_id"] ?>">Update</button>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <?php } else { ?>
                                     <!-- Show Join or Leave button if the user is not the owner -->
                                     <?php if (!$isSubscribed) { ?>
@@ -114,7 +175,7 @@ require_once("../backend/config/config.php");
                                     <?php } ?>
                                 <?php } ?>
                             </div>
-
+                        
 
                     </div>
                     <div class="content">
@@ -149,7 +210,7 @@ require_once("../backend/config/config.php");
                         </div>
                     </div>
 
-                    <?php 
+                    <?php
                         $query = "SELECT tp.*, td.full_name, td.profile_img, td.job, tr.role_name, ts.space_id, ts.space_name, COUNT(tc.posted_id) AS total_comments FROM tbl_spaces_post tp
                         JOIN tbl_account ta ON tp.acc_id = ta.acc_id
                         JOIN tbl_account_details td ON tp.acc_id = td.acc_id
@@ -173,7 +234,7 @@ require_once("../backend/config/config.php");
                         <div class="post-details">
                             <div class="left">
                                 <?php if (empty($row["profile_img"])): ?>
-                                    <i class="fa-regular fa-circle-user"></i>
+                                    <i class="fa-regular fa-circle-user" style="font-size: 50px;"></i>
                                 <?php else: ?>
                                     <div class="h-16 w-16">
                                         <img src="<?php echo htmlspecialchars($row["profile_img"]); ?>" alt="Profile Image"
@@ -450,7 +511,7 @@ require_once("../backend/config/config.php");
 <script src="../jquery/vote.js"></script>
 <script src="../jquery/updatePost.js"></script>
 <script src="../jquery/spacesJoin.js"></script>
-<script src="../js/ai_script.js"></script>
+<script src="../jquery/updateSpace.js"></script>
 <script>
     const dropdownToggle = document.querySelectorAll('.dropdown-toggle');
     const dropdownMenu = document.querySelectorAll('.dropdown-menu');
@@ -460,6 +521,23 @@ require_once("../backend/config/config.php");
             dropdownMenu[index].style.display = dropdownMenu[index].style.display === 'block' ? 'none' : 'block';
         });
     });
+
+    const spaceImg = document.querySelectorAll('.spaceImg');
+    const newSpaceImg = document.getElementById('space_img');
+
+    newSpaceImg.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = function(e){
+            spaceImg.forEach((img) => {
+                img.src = e.target.result;
+            });
+        }
+
+        reader.readAsDataURL(file);
+    });
+
 </script>
 </body>
 </html>

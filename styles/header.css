@@ -141,7 +141,7 @@ nav .container:hover {
     width: 700px;
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 50px;
+    margin-top: 40px;
     gap: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -159,6 +159,12 @@ nav .container:hover {
     width: 35px;
     border-radius: 50%;
     overflow: hidden;
+}
+
+.spaces .hover-div .space .img-con  img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
 }
 
 .spaces .hover-div .add-more {
@@ -180,7 +186,7 @@ nav .container:hover {
     background: rgb(240, 240, 240);
     padding: 12px;
     width: 250px;
-    margin-top: 50px;
+    margin-top: 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     gap: 8px;
 }
@@ -212,6 +218,12 @@ nav .container:hover {
     overflow: hidden;
 }
 
+.following .hover-div .icons .img-con  img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
 .following .hover-div .followed-div {
     display: flex;
     flex-direction: column;
@@ -221,17 +233,14 @@ nav .container:hover {
 .following .hover-div .followed-div .info-det {
     font-size: 14px;
     display: flex;
-    align-items: center;
+    align-items: start;
     gap: 10px;
     color: #333;
 }
 
-.following .hover-div .followed-div .info-det .img-con{
-    height: 30px;
-    width: 30px;
-}
+
 .following .hover-div .followed-div .info-det .img-con img{
-    object-fit: contain;
+    object-fit: cover;
     object-position: center;
 }
 
