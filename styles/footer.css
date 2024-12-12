@@ -59,3 +59,9 @@ footer a {
         text-align: center; 
     }
 }
+
+@media (min-width: 1500px) {
+    footer{
+        margin-top: 0;
+    }
+}

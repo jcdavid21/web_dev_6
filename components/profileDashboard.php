@@ -75,6 +75,19 @@ require_once("../backend/config/config.php");
                                 <div class="job">
                                     <?php echo $userData["job"] ?>
                                 </div>
+                                <div class="followers">
+                                    <?php 
+                                        $queryFollowers = "SELECT * FROM tbl_followed WHERE followed_id = ?";
+                                        $stmtFollowers = $conn->prepare($queryFollowers);
+                                        $stmtFollowers->bind_param("i", $acc_id);
+                                        $stmtFollowers->execute();
+                                        $resultFollowers = $stmtFollowers->get_result();
+                                        $totalFollowers = $resultFollowers->num_rows;
+                                    ?>
+                                    <div class="followers-count font-semibold">
+                                        <span><?php echo $totalFollowers ?></span> followers
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <?php 
@@ -136,7 +149,7 @@ require_once("../backend/config/config.php");
                         <div class="post-details">
                             <div class="left">
                                 <?php if (empty($row["profile_img"])): ?>
-                                    <i class="fa-regular fa-circle-user"></i>
+                                    <i class="fa-regular fa-circle-user" style="font-size: 50px;"></i>
                                 <?php else: ?>
                                     <div class="h-16 w-16">
                                         <img src="<?php echo htmlspecialchars($row["profile_img"]); ?>" alt="Profile Image"
@@ -300,10 +313,10 @@ require_once("../backend/config/config.php");
                                 <i class="fa-regular fa-comment"></i>
                                 <span class="total-comments"><?php echo $row["total_comments"] ?></span>
                             </div>
-                            <div class="comments">
+                            <!-- <div class="comments">
                                 <i class="fa-solid fa-rotate"></i>
                                 <span><?php echo $row["posted_share"] ?></span>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="comment-div">
